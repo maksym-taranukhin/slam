@@ -88,7 +88,7 @@ namespace LuxSlam
 
 	    Logger & l = Logger::getInstance ();
 
-	    l.logPoint (result.translation_vector);
+        l.logCamera(result.translation_vector,0,0,0);
 
             cv::Mat inverted_rotation_matrix(3, 3, CV_32FC1);
             cv::invert(result.rotation_matrix,inverted_rotation_matrix);
