@@ -89,16 +89,21 @@ namespace LuxSlam
 
             cv::Mat inverted_rotation_matrix(3, 3, CV_32FC1);
             cv::invert(result.rotation_matrix,inverted_rotation_matrix);
-        //    curr_frame->Transform(result.rotation_matrix, result.translation_vector);
 
+            //curr_frame->Transform(result.rotation_matrix, result.translation_vector);
+
+            global_rotation_translation_vector.translation_vector =
+                    global_rotation_translation_vector.translation_vector + result.translation_vector;
+
+            global_rotation_translation_vector.rotation_matrix *= inverted_rotation_matrix;
 
             cv::Mat rodrigues(3, 1, CV_32FC1);
-            cv::Rodrigues(inverted_rotation_matrix,rodrigues);
+            cv::Rodrigues(global_rotation_translation_vector.rotation_matrix,rodrigues);
 
             Logger & l = Logger::getInstance ();
 
-            l.logCamera(result.translation_vector,-(rodrigues.at<float>(0)/3.14*180),-(rodrigues.at<float>(1)/3.14*180),-(rodrigues.at<float>(2))/3.14*180);
-
+            l.logCamera(global_rotation_translation_vector.translation_vector,-(rodrigues.at<float>(0)/3.14*180),-(rodrigues.at<float>(1)/3.14*180),-(rodrigues.at<float>(2))/3.14*180);
+            l.addImage(results,"fatures");
 //            for (int i = 0 ; i < 3 ; i++)
 //                file <<-rodrigues.at<float>(i)/M_PI*(float)180<<" ";
 /*

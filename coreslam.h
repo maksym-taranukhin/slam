@@ -32,6 +32,7 @@ namespace LuxSlam
         LuxFrame *curr_frame;
         FPoints *prev_features;
         FPoints *curr_features;
+        Triple global_rotation_translation_vector;
         void Get3dPointsOfMatches(const std::vector<cv::DMatch>& matches,  std::vector<MatchPoints>& points);
     };
 }

@@ -15,7 +15,7 @@ namespace LuxSlam
         Triple()
         {
             translation_vector = cv::Point3d(0,0,0);
-            rotation_matrix = cv::Mat(3,3,CV_32FC1);
+            rotation_matrix = cv::Mat::eye(3,3,CV_32FC1);
         }
 
         cv::Point3d getPoint3d(int frame,int index) const
