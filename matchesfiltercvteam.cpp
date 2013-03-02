@@ -37,7 +37,7 @@ namespace LuxSlam
                       cv::Point3d p3d1 = good_matches.at(i).first3d;
                       cv::Point3d p3d2 = good_matches.at(i).second3d;
 
-                      const float max_vec = 0.025;
+                      const float max_vec = 0.05;
                       float len1 = StaticFunctions::distance3d(curr_p3d,p3d1);
                       float len2 = StaticFunctions::distance3d(curr_p3d2,p3d2);
 

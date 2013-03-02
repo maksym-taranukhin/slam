@@ -13,7 +13,7 @@ namespace LuxSlam
 
         cv::cvtColor(frame->image,gray,CV_BGR2GRAY);
 
-        int minHessian = 1000;
+        int minHessian = 350;
 
         cv::SurfFeatureDetector detector( minHessian );
 
