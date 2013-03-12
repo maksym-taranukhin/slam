@@ -42,7 +42,7 @@ namespace LuxSlam
 
         if(distants[1]<(normaEx - distants[0]) || distants[1]>(normaEx + distants[0]))
         {
-            qDebug() << "Trilateration: Erorr in r2";
+            //qDebug() << "Trilateration: Erorr in r2";
             return 0;
         }
 
@@ -68,7 +68,7 @@ namespace LuxSlam
 
         if (errno == EDOM)
         {
-            qDebug() << "Trilateration: Erorr in sqrt";
+            //qDebug() << "Trilateration: Erorr in sqrt";
             return 0;
         }
 

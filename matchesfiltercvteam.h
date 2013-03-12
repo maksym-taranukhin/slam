@@ -8,6 +8,7 @@ namespace LuxSlam
     {
     public:
         MatchesFilterCVTeam();
+        // points of matches must not have the point.z == 0; (undefined points)
         std::vector< MatchPoints > filterMatches(
                 std::vector <MatchPoints> );
     };

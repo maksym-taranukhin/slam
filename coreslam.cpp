@@ -73,81 +73,52 @@ namespace LuxSlam
             for (int i=0;i<points.size();i++)
                 cv::line(results,points.at(i).first2d,points.at(i).second2d,cvScalar(0,190),3);
 
+            // getting rotation, translation vector
             result = rtfinder->getRTVector(points);
-
-
-
-           // std::ofstream file("/home/max/config.txt");
-           // file<<"2\n";
-           // file<<"0 0 0 0 0 0\n";
-            //file<<"0 0 0 0 0 0\n";
 
             result.translation_vector.x *= (-1);
             result.translation_vector.y *= (-1);
             result.translation_vector.z *= (-1);
 
+//            result.translation_vector.x=   global_rotation_translation_vector.rotation_matrix.at<float>(0,0)*result.translation_vector.x+
+//                            global_rotation_translation_vector.rotation_matrix.at<float>(0,1)*result.translation_vector.y+
+//                            global_rotation_translation_vector.rotation_matrix.at<float>(0,2)*result.translation_vector.z;
 
-            cv::Mat inverted_rotation_matrix(3, 3, CV_32FC1);
-            cv::invert(result.rotation_matrix,inverted_rotation_matrix);
+//            result.translation_vector.y=   global_rotation_translation_vector.rotation_matrix.at<float>(1,0)*result.translation_vector.x+
+//                            global_rotation_translation_vector.rotation_matrix.at<float>(1,1)*result.translation_vector.y+
+//                            global_rotation_translation_vector.rotation_matrix.at<float>(1,2)*result.translation_vector.z;
 
-            //curr_frame->Transform(result.rotation_matrix, result.translation_vector);
+//            result.translation_vector.z=   global_rotation_translation_vector.rotation_matrix.at<float>(2,0)*result.translation_vector.x+
+//                            global_rotation_translation_vector.rotation_matrix.at<float>(2,1)*result.translation_vector.y+
+//                            global_rotation_translation_vector.rotation_matrix.at<float>(2,2)*result.translation_vector.z;
+
+
+            // transform the global rotation, translation vector
+            global_rotation_translation_vector.rotation_matrix =
+                    result.rotation_matrix * global_rotation_translation_vector.rotation_matrix;
 
             global_rotation_translation_vector.translation_vector =
                     global_rotation_translation_vector.translation_vector + result.translation_vector;
 
-            global_rotation_translation_vector.rotation_matrix *= inverted_rotation_matrix;
-
+            // Logging the camera
             cv::Mat rodrigues(3, 1, CV_32FC1);
             cv::Rodrigues(global_rotation_translation_vector.rotation_matrix,rodrigues);
 
             Logger & l = Logger::getInstance ();
 
-            l.logCamera(global_rotation_translation_vector.translation_vector,-(rodrigues.at<float>(0)/3.14*180),-(rodrigues.at<float>(1)/3.14*180),-(rodrigues.at<float>(2))/3.14*180);
+            l.logCamera(global_rotation_translation_vector.translation_vector,rodrigues.at<float>(0)/M_PI*180,rodrigues.at<float>(1)/M_PI*180,rodrigues.at<float>(2)/M_PI*180);
             l.addImage(results,"fatures");
-//            for (int i = 0 ; i < 3 ; i++)
-//                file <<-rodrigues.at<float>(i)/M_PI*(float)180<<" ";
-/*
-            file <<result.translation_vector.x<<" ";
-            file <<result.translation_vector.y<<" ";
-            file <<result.translation_vector.z<<" ";
-            file.close();
 
-            file.open("/home/max/ny0.txt");
-             for (int i=0;i<640;i+=3)
-                 for (int j=0;j<480;j+=3)
-                 {
-                     file<<(prev_frame->getPoint3D(i,j).x)<<" ";
-                     file<<prev_frame->getPoint3D(i,j).y<<" ";
-                     file<<prev_frame->getPoint3D(i,j).z<<" ";
-                     file<<prev_frame->image.data[(j*640+i)*3]/255.0<<" ";
-                     file<<prev_frame->image.data[(j*640+i)*3+1]/255.0<<" ";
-                     file<<prev_frame->image.data[(j*640+i)*3+2]/255.0<<"\n";
-                 }
-             file.close();
-             file.open("/home/max/ny1.txt");
-              for (int i=0;i<640;i+=3)
-                  for (int j=0;j<480;j+=3)
-                  {
-                      //curr_frame->ExecuteTransformation();
-                      file<<curr_frame->getPoint3D(i,j).x<<" ";
-                      file<<curr_frame->getPoint3D(i,j).y<<" ";
-                      file<<curr_frame->getPoint3D(i,j).z<<" ";
-                      file<<curr_frame->image.data[(j*640+i)*3]/255.0<<" ";
-                      file<<curr_frame->image.data[(j*640+i)*3+1]/255.0<<" ";
-                      file<<curr_frame->image.data[(j*640+i)*3+2]/255.0<<"\n";
-                  }
-              file.close();
-*/
+        } else
+        {
+           Logger & l = Logger::getInstance ();
+           l.logCamera(cv::Point3d(0,0,0),0,0,0);
         }
-
-        // ********dbg
-        cv::imshow("surf",results);
 
         delete prev_frame;
         delete prev_features;
 
         prev_frame = new LuxFrame(*curr_frame);
-        qDebug()<<prev_frame->depth_map.data<<curr_frame->depth_map.data;
         prev_features = curr_features;
 
 //        return result;

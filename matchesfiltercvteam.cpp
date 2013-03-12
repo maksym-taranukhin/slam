@@ -15,7 +15,7 @@ namespace LuxSlam
               cv::Point3d point3d1 = input_matches.at(i).first3d;
               cv::Point3d point3d2 = input_matches.at(i).second3d;
 
-              if( (point3d1.z!=0) && (point3d2.z!=0) &&fabs(point3d1.z-point3d2.z)<1.0)
+              if( fabs(point3d1.z-point3d2.z)<1.0)
               {
                     good_matches.push_back( input_matches.at(i));
               }
@@ -75,7 +75,7 @@ namespace LuxSlam
                                             very_good_matches.push_back(good_matches[i]);
             }
         }
-        qDebug()<<input_matches.size()<<very_good_matches.size()<<"before filter size";
+        //qDebug()<<input_matches.size()<<very_good_matches.size()<<"before filter size";
         return very_good_matches;
        // return good_matches;
     }
