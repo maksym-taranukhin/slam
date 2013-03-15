@@ -76,44 +76,48 @@ namespace LuxSlam
             // getting rotation, translation vector
             result = rtfinder->getRTVector(points);
 
-            result.translation_vector.x *= (-1);
-            result.translation_vector.y *= (-1);
-            result.translation_vector.z *= (-1);
+            std::cerr<<"\ncurrent transl before rot Vec\n"<< result.translation_vector;
+            std::cerr<<"\global rot matrice \n"<< global_rotation_translation_vector.rotation_matrix;
 
-//            result.translation_vector.x=   global_rotation_translation_vector.rotation_matrix.at<float>(0,0)*result.translation_vector.x+
-//                            global_rotation_translation_vector.rotation_matrix.at<float>(0,1)*result.translation_vector.y+
-//                            global_rotation_translation_vector.rotation_matrix.at<float>(0,2)*result.translation_vector.z;
+            cv::Point3d not_rotated_vector = result.translation_vector;
+            result.translation_vector.x=
+                    global_rotation_translation_vector.rotation_matrix.at<float>(0,0)*not_rotated_vector.x+
+                    global_rotation_translation_vector.rotation_matrix.at<float>(0,1)*not_rotated_vector.y+
+                    global_rotation_translation_vector.rotation_matrix.at<float>(0,2)*not_rotated_vector.z;
 
-//            result.translation_vector.y=   global_rotation_translation_vector.rotation_matrix.at<float>(1,0)*result.translation_vector.x+
-//                            global_rotation_translation_vector.rotation_matrix.at<float>(1,1)*result.translation_vector.y+
-//                            global_rotation_translation_vector.rotation_matrix.at<float>(1,2)*result.translation_vector.z;
-
-//            result.translation_vector.z=   global_rotation_translation_vector.rotation_matrix.at<float>(2,0)*result.translation_vector.x+
-//                            global_rotation_translation_vector.rotation_matrix.at<float>(2,1)*result.translation_vector.y+
-//                            global_rotation_translation_vector.rotation_matrix.at<float>(2,2)*result.translation_vector.z;
+            result.translation_vector.y=
+                    global_rotation_translation_vector.rotation_matrix.at<float>(1,0)*not_rotated_vector.x+
+                    global_rotation_translation_vector.rotation_matrix.at<float>(1,1)*not_rotated_vector.y+
+                    global_rotation_translation_vector.rotation_matrix.at<float>(1,2)*not_rotated_vector.z;
 
 
+            result.translation_vector.z=
+                    global_rotation_translation_vector.rotation_matrix.at<float>(2,0)*not_rotated_vector.x+
+                    global_rotation_translation_vector.rotation_matrix.at<float>(2,1)*not_rotated_vector.y+
+                    global_rotation_translation_vector.rotation_matrix.at<float>(2,2)*not_rotated_vector.z;
+
+            std::cerr<<"\ncurrent transl Vec\n"<< result.translation_vector;
             // transform the global rotation, translation vector
             global_rotation_translation_vector.rotation_matrix =
-                    result.rotation_matrix * global_rotation_translation_vector.rotation_matrix;
+                    global_rotation_translation_vector.rotation_matrix * result.rotation_matrix;
 
             global_rotation_translation_vector.translation_vector =
                     global_rotation_translation_vector.translation_vector + result.translation_vector;
 
-            // Logging the camera
-            cv::Mat rodrigues(3, 1, CV_32FC1);
-            cv::Rodrigues(global_rotation_translation_vector.rotation_matrix,rodrigues);
 
-            Logger & l = Logger::getInstance ();
+            std::cerr<<"\nglobal transl Vec\n"<< global_rotation_translation_vector.translation_vector;
 
-            l.logCamera(global_rotation_translation_vector.translation_vector,rodrigues.at<float>(0)/M_PI*180,rodrigues.at<float>(1)/M_PI*180,rodrigues.at<float>(2)/M_PI*180);
-            l.addImage(results,"fatures");
+            }
+        // Logging the camera
 
-        } else
-        {
-           Logger & l = Logger::getInstance ();
-           l.logCamera(cv::Point3d(0,0,0),0,0,0);
-        }
+        cv::Mat eulerAngles = StaticFunctions::getEulerAngles(global_rotation_translation_vector.rotation_matrix);
+
+        std::cerr <<"\n Angles\n" << eulerAngles/M_PI*180 << "\n";
+
+        Logger & l = Logger::getInstance ();
+
+        l.logCamera(global_rotation_translation_vector.translation_vector,eulerAngles.at<float>(0)/M_PI*180,eulerAngles.at<float>(1)/M_PI*180,eulerAngles.at<float>(2)/M_PI*180);
+        l.addImage(results,"fatures");
 
         delete prev_frame;
         delete prev_features;

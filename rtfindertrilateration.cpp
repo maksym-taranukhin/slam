@@ -2,6 +2,7 @@
 #include "staticfunctions.h"
 #include <errno.h>
 #include <iostream>
+#include <opencv/cv.h>
 
 namespace LuxSlam
 {
@@ -186,23 +187,41 @@ namespace LuxSlam
                 if (first_distance > second_distance) firstSolution = secondSolution;
             }
 
-            firstSolution.x *= -1;
-            firstSolution.y *= -1;
-            firstSolution.z *= -1;
-
             current_triple.translation_vector = firstSolution;
-
-           // qDebug()<<firstSolution.x*100<<firstSolution.y*100<<firstSolution.z*100;
-            //    qDebug()<<secondSolution.x*100<<secondSolution.y*100<<secondSolution.z*100;
 
             triples_with_translation_vector.push_back(current_triple);
         }
 
         Triple optimum_vector = getOptimumVector(triples_with_translation_vector);
 
+//        optimum_vector.translation_vector.x = 0;
+//        optimum_vector.translation_vector.y = 0;
+//        optimum_vector.translation_vector.z = 0;
+//        optimum_vector.rotation_matrix = StaticFunctions::getRotationMatrix(M_PI_2,3)*(StaticFunctions::getRotationMatrix(M_PI_2,2)
+//                *StaticFunctions::getRotationMatrix(M_PI_2,1));
+//        std::cerr << "rotmat: " << optimum_vector.rotation_matrix << "\n";
+//        cv::transpose(findMatrixRotation(optimum_vector), optimum_vector.rotation_matrix);
 
         optimum_vector.rotation_matrix = findMatrixRotation(optimum_vector);
 
+
+//        static int iterator = 0;
+//        iterator ++;
+//        switch (iterator)
+//        {
+//            case 1:
+//                optimum_vector.translation_vector = cv::Point3d(0,0,2);
+//                optimum_vector.rotation_matrix = StaticFunctions::getRotationMatrix(M_PI_2, 2);
+//                break;
+//            case 2:
+//                optimum_vector.translation_vector = cv::Point3d(0,0,2);
+//                optimum_vector.rotation_matrix = StaticFunctions::getRotationMatrix(-M_PI_2, 2);
+//                break;
+//            default:
+//                optimum_vector.translation_vector = cv::Point3d(0,0,0);
+//                optimum_vector.rotation_matrix = StaticFunctions::getRotationMatrix(0, 2);
+//            break;
+//        }
         return optimum_vector;
     }
 
