@@ -17,7 +17,7 @@ namespace LuxSlam
 
     }
 
-    cv::Mat StaticFunctions::getRotationMatrix(float angle, int axis)
+    cv::Mat StaticFunctions::GenerateRotationMatrix(float angle, int axis)
     {
         cv::Mat mat(3,3,CV_32FC1);
         switch (axis) {
@@ -56,8 +56,7 @@ namespace LuxSlam
             break;
         }
 
-       // std::cerr << "getMatRot: " << mat << "\n";
-         return mat;
+        return mat;
     }
 
     cv::Mat StaticFunctions::getEulerAngles(const cv::Mat rotationMatrix)
