@@ -27,6 +27,7 @@ namespace LuxSlam
 
     RTFinderTrilateration::RTFinderTrilateration()
     {
+
     }
 
     // trilateration function return 0 if there is no solution
