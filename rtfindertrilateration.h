@@ -4,6 +4,7 @@
 #include "fstream"
 namespace LuxSlam
 {
+
     class RTFinderTrilateration : public IRTFinder
     {
         Triple getRTVector(const std::vector <MatchPoints>&);

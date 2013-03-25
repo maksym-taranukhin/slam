@@ -17,7 +17,6 @@ namespace LuxSlam
 
     void CoreSlam::Get3dPointsOfMatches(const std::vector<cv::DMatch>& matches,  std::vector<MatchPoints>& points)
     {
-        //todo in function
         for (unsigned int i = 0 ; i< matches.size(); i++)
         {
             cv::KeyPoint p1 = prev_features->points.at(matches.at(i).queryIdx);
@@ -74,7 +73,20 @@ namespace LuxSlam
             // getting rotation, translation vector
             result = rtfinder->getRTVector(points);
 
+            cv::Mat eulerAngles = StaticFunctions::getEulerAngles(result.rotation_matrix);
+
+            std::cerr<<"before\n"<<eulerAngles<<"\n";
+            result.rotation_matrix = StaticFunctions::getRotationMatrix(eulerAngles);
+
+            std::cerr<<"after\n"<<StaticFunctions::getEulerAngles(result.rotation_matrix)<<"\n";
+
+
+            std::cerr << "vector: " << result.translation_vector << "\n";
+            std::cerr << "distance: " << StaticFunctions::distance3d(cv::Point3d(0,0,0), result.translation_vector) << "\n";
+            std::cerr << global_transformation_vector.rotation_matrix << "\n";
+
             cv::Point3d not_rotated_vector = result.translation_vector;
+
             result.translation_vector.x=
                     global_transformation_vector.rotation_matrix.at<float>(0,0)*not_rotated_vector.x+
                     global_transformation_vector.rotation_matrix.at<float>(0,1)*not_rotated_vector.y+
@@ -90,17 +102,29 @@ namespace LuxSlam
                     global_transformation_vector.rotation_matrix.at<float>(2,1)*not_rotated_vector.y+
                     global_transformation_vector.rotation_matrix.at<float>(2,2)*not_rotated_vector.z;
 
+            std::cerr << "after vector: " << result.translation_vector << "\n";
+            std::cerr << "after distance: " << StaticFunctions::distance3d(cv::Point3d(0,0,0), result.translation_vector)<<"\n\n";
+
             // calculate the global rotation matrix and the translation vector
             global_transformation_vector.rotation_matrix =
                     global_transformation_vector.rotation_matrix * result.rotation_matrix;
 
             global_transformation_vector.translation_vector =
                     global_transformation_vector.translation_vector + result.translation_vector;
-
         }
 
         // Logging the camera
+
         cv::Mat eulerAngles = StaticFunctions::getEulerAngles(global_transformation_vector.rotation_matrix);
+//        static int iterat = 0;
+//        iterat ++;
+//        cv::Mat tmp_rot = StaticFunctions::GenerateRotationMatrix(M_PI_2/iterat,1)*StaticFunctions::GenerateRotationMatrix(M_PI_2/iterat,2);
+//        std::cerr<<"\n before\n"<<tmp_rot;
+//        cv::Mat tmp_eul = StaticFunctions::getEulerAngles(tmp_rot);
+//        tmp_rot = StaticFunctions::getRotationMatrix(tmp_eul);
+//        std::cerr<<"\n after\n"<<tmp_rot<<"\n";
+
+
         Logger & l = Logger::getInstance ();
 
         l.logCamera(global_transformation_vector.translation_vector,eulerAngles.at<float>(0)/M_PI*180,eulerAngles.at<float>(1)/M_PI*180,eulerAngles.at<float>(2)/M_PI*180);

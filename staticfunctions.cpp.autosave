@@ -84,7 +84,7 @@ namespace LuxSlam
 
         cv::Mat rotation_matrix(3,3, CV_32FC1);
 
-        rotation_matrix = GenerateRotationMatrix(z,3)*GenerateRotationMatrix(y,2)*GenerateRotationMatrix(x,1);
+        rotation_matrix = GenerateRotationMatrix(x,1)*GenerateRotationMatrix(y,2)*GenerateRotationMatrix(z,3)*;
 //        rotation_matrix.at<float>(0,0) =  cos(y) * cos(z);
 //        rotation_matrix.at<float>(1,0) = -cos(y) * sin(z);
 //        rotation_matrix.at<float>(2,0) =  sin(y);

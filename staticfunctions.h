@@ -11,6 +11,7 @@ namespace LuxSlam
         static double distance3d(const cv::Point3d &p1, const cv::Point3d &p2);
         static cv::Mat GenerateRotationMatrix(float, int);
         static cv::Mat getEulerAngles(const cv::Mat);
+        static cv::Mat getRotationMatrix(const cv::Mat euler_angles);
     };
 }
 #endif // STATICFUNCTIONS_H
