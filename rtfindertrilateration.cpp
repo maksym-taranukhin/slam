@@ -230,8 +230,7 @@ namespace LuxSlam
         }
 
         Triple optimal_vector = getOptimumVector(triples_with_translation_vector);
-        optimal_vector.rotation_matrix = /*StaticFunctions::GenerateRotationMatrix(M_2_SQRTPI,1)*StaticFunctions::GenerateRotationMatrix(M_2_SQRTPI,2)
-                *StaticFunctions::GenerateRotationMatrix(M_2_SQRTPI/M_PI_2,3);*/findMatrixRotation(optimal_vector);
+        optimal_vector.rotation_matrix = findMatrixRotation(optimal_vector);
 
         return optimal_vector;
     }

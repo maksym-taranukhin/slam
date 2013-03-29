@@ -5,6 +5,26 @@ namespace LuxSlam
     StaticFunctions::StaticFunctions()
     {
     }
+
+    cv::Point3d StaticFunctions::transformPoint3d(cv::Point3d curr_point, cv::Mat R, cv::Point3d T)
+    {
+        cv::Point3d temp;
+
+        temp.x=   R.at<float>(0,0)*curr_point.x+
+                        R.at<float>(0,1)*curr_point.y+
+                        R.at<float>(0,2)*curr_point.z+ T.x;
+
+        temp.y=   R.at<float>(1,0)*curr_point.x+
+                        R.at<float>(1,1)*curr_point.y+
+                        R.at<float>(1,2)*curr_point.z+ T.y;
+
+        temp.z=   R.at<float>(2,0)*curr_point.x+
+                        R.at<float>(2,1)*curr_point.y+
+                        R.at<float>(2,2)*curr_point.z+ T.z;
+
+        return temp;
+    }
+
     double StaticFunctions::distance2d(const cv::Point2d &p1, const cv::Point2d &p2)
     {
         double res = (p1.x - p2.x)*(p1.x - p2.x)+(p1.y - p2.y)*(p1.y - p2.y);

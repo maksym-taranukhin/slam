@@ -12,6 +12,7 @@ namespace LuxSlam
         static cv::Mat GenerateRotationMatrix(float, int);
         static cv::Mat getEulerAngles(const cv::Mat);
         static cv::Mat getRotationMatrix(const cv::Mat euler_angles);
+        static cv::Point3d transformPoint3d(cv::Point3d point, cv::Mat R, cv::Point3d T);
     };
 }
 #endif // STATICFUNCTIONS_H

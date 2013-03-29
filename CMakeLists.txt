@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 
 project(NewOfNewSlam CXX C)
 
-set(sources coreslam.cpp featuredetectorsurf.cpp featurematcherflann.cpp ifeaturedetector.cpp ifeaturematching.cpp imatchesfilter.cpp irtfinder.cpp luxslam.cpp matchesfiltercvteam.cpp rtfindertrilateration.cpp staticfunctions.cpp triples.cpp debugger_interface.cpp)
+
+set(sources coreslam.cpp featuredetectorsurf.cpp featurematcherflann.cpp ifeaturedetector.cpp ifeaturematching.cpp imatchesfilter.cpp irtfinder.cpp luxslam.cpp matchesfiltercvteam.cpp rtfindertrilateration.cpp staticfunctions.cpp triples.cpp debugger_interface.cpp iboundleadjustment.h iboundleadjustment.cpp opencvboundleadjustment.h opencvboundleadjustment.cpp)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
