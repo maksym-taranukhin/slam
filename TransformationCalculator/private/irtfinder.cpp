@@ -1,4 +1,4 @@
-#include "irtfinder.h"
+#include "../irtfinder.h"
 namespace LuxSlam
 {
     IRTFinder::IRTFinder()

@@ -1,4 +1,4 @@
-#include "opencvboundleadjustment.h"
+#include "../opencvboundleadjustment.h"
 namespace LuxSlam
 {
 

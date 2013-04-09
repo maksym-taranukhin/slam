@@ -1,4 +1,4 @@
-#include "featuredetectorsurf.h"
+#include "../featuredetectorsurf.h"
 
 namespace LuxSlam
 {

@@ -1,4 +1,4 @@
-#include "staticfunctions.h"
+#include "../staticfunctions.h"
 #include <iostream>
 namespace LuxSlam
 {

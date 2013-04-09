@@ -3,16 +3,17 @@
 #include "opencv/highgui.h"
 #include <iostream>
 
-#include "ifeaturedetector.h"
-#include "ifeaturematching.h"
-#include "irtfinder.h"
-#include "imatchesfilter.h"
+#include "FeaturesDetector/ifeaturedetector.h"
+#include "FeaturesMatcher/ifeaturematching.h"
+#include "TransformationCalculator/irtfinder.h"
+#include "MatchesFilter/imatchesfilter.h"
 
-#include "featuredetectorsurf.h"
-#include "featurematcherflann.h"
-#include "rtfindertrilateration.h"
-#include "matchesfiltercvteam.h"
+#include "FeaturesDetector/featuredetectorsurf.h"
+#include "FeaturesMatcher/featurematcherflann.h"
+#include "TransformationCalculator/rtfindertrilateration.h"
+#include "MatchesFilter/matchesfiltercvteam.h"
 #include "luxframe.hpp"
+
 #include "matchpoints.h"
 
 namespace LuxSlam

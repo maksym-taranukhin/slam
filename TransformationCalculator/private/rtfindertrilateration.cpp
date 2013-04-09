@@ -1,5 +1,5 @@
-#include "rtfindertrilateration.h"
-#include "staticfunctions.h"
+#include "../rtfindertrilateration.h"
+#include "../../AdditionFunctions/staticfunctions.h"
 #include <errno.h>
 #include <iostream>
 #include <opencv/cv.h>

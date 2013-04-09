@@ -3,7 +3,7 @@
 #include "triples.h"
 #include "luxframe.hpp"
 #include "matchpoints.h"
-#include "staticfunctions.h"
+#include "../AdditionFunctions/staticfunctions.h"
 namespace LuxSlam
 {
     class IRTFinder

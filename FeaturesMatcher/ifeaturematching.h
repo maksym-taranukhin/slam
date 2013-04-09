@@ -1,6 +1,6 @@
 #ifndef IFEATUREMATCHING_H
 #define IFEATUREMATCHING_H
-#include "ifeaturedetector.h"
+#include "../FeaturesDetector/ifeaturedetector.h"
 #include "opencv2/features2d/features2d.hpp"
 namespace LuxSlam
 {

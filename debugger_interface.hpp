@@ -9,6 +9,8 @@ using namespace LuxSlam;
 
 class SlamInterface : public IAbstractAlgorithm
 {
+    int frames_counter;
+    int frames_step;
 public:
 	SlamInterface (Config::ptr);
 	bool create ();

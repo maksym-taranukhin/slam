@@ -1,4 +1,4 @@
-#include "ifeaturedetector.h"
+#include "../ifeaturedetector.h"
 namespace LuxSlam
 {
 

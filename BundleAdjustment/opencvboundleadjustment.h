@@ -7,7 +7,7 @@
 #include "opencv2/core/core.hpp"
 #include "opencv2/calib3d/calib3d.hpp"
 #include "opencv2/contrib/contrib.hpp"
-#include "staticfunctions.h"
+#include "../AdditionFunctions/staticfunctions.h"
 
 namespace LuxSlam
 {

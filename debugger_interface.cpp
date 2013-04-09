@@ -2,6 +2,8 @@
 
 SlamInterface::SlamInterface (Config::ptr c) : IAbstractAlgorithm (c)
 {
+    frames_counter = 0;
+    frames_step = atoi(config->get<std::string> ("coreslam.frames_step").c_str());
 }
 
 bool SlamInterface::create()
@@ -16,7 +18,10 @@ bool SlamInterface::run(cv::Mat &image, cv::Mat &dmap)
 	f->image = image;
 	f->depth_map = dmap;
 
-	slam->run(f);
+    if (frames_counter%frames_step == 0)
+        slam->run(f);
+
+    frames_counter++;
 
 	return true;
 }

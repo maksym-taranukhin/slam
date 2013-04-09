@@ -3,9 +3,9 @@
 #include "vector"
 #include "opencv2/features2d/features2d.hpp"
 #include "luxframe.hpp"
-#include "ifeaturedetector.h"
+#include "../FeaturesDetector/ifeaturedetector.h"
 #include "matchpoints.h"
-#include "staticfunctions.h"
+#include "../AdditionFunctions/staticfunctions.h"
 namespace LuxSlam
 {
     class IMatchesFilter
