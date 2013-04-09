@@ -1,7 +1,7 @@
 #include "coreslam.h"
 #include "QDebug"
 #include "math.h"
-#include <logger.hpp>
+#include <Logger.hpp>
 
 namespace LuxSlam
 {
@@ -13,6 +13,7 @@ namespace LuxSlam
         ffilter = new MatchesFilterCVTeam();
         prev_frame = 0;
         prev_features = 0;
+        bundle_adjusment = new OpenCVBoundleAdjustemnt(5);
     }
 
     void CoreSlam::Get3dPointsOfMatches(const std::vector<cv::DMatch>& matches,  std::vector<MatchPoints>& points)
@@ -100,6 +101,9 @@ namespace LuxSlam
 
             global_transformation_vector.translation_vector =
                     global_transformation_vector.translation_vector + result.translation_vector;
+
+//            bundle_adjusment->pushFrame(points,global_transformation_vector);
+
         }
 
         // Logging the camera

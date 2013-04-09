@@ -3,7 +3,6 @@
 
 #include "iboundleadjustment.h"
 #include "queue"
-#include "triples.h"
 #include "opencv2/core/core.hpp"
 #include "opencv2/calib3d/calib3d.hpp"
 #include "opencv2/contrib/contrib.hpp"
@@ -25,19 +24,20 @@ public:
     }
 
     void run();
-    int pushFrame(std::vector<MatchPoints>, std::vector<Triple>);
+    int pushFrame(std::vector<MatchPoints>, Triple);
+
 private:
     struct FrameData
     {
         std::vector<MatchPoints> matches;
-        std::vector<Triple> triples;
-        FrameData(std::vector<MatchPoints> matches,std::vector<Triple> triples):
-            matches(matches), triples(triples)
+        Triple triple;
+        FrameData(std::vector<MatchPoints> matches, Triple triple):
+            matches(matches), triple(triple)
         {}
     };
 
     int numCamera;
-    std::vector<FrameData> queueFrame;
+    std::deque<FrameData> queueFrame;
     // camera related parameters
 
     cv::Size  cameraRes;

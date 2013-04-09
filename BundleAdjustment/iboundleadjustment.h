@@ -4,15 +4,16 @@
 #include "opencv2/contrib/contrib.hpp"
 #include "matchpoints.h"
 #include "vector"
-
+#include "triples.h"
 namespace LuxSlam
 {
     class IBoundleAdjustment
     {
+
     public:
         virtual void run() = 0;
-        virtual int pushFrame(std::vector<MatchPoints>) = 0;
-        IBoundleAdjustment();
+        virtual int pushFrame(std::vector<MatchPoints>, Triple) = 0;
+        IBoundleAdjustment(){}
         virtual ~IBoundleAdjustment(){}
     };
 }

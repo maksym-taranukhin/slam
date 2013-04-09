@@ -1,9 +1,9 @@
 #include <coreslam.h>
 #include <opencv2/highgui/highgui.hpp>
 
-#include <logger.hpp>
-#include <config.hpp>
-#include <algo_interface.hpp>
+#include <Logger.hpp>
+#include <Config.hpp>
+#include <AlgoInterface.hpp>
 
 using namespace LuxSlam;
 

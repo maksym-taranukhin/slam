@@ -15,6 +15,7 @@
 #include "luxframe.hpp"
 
 #include "matchpoints.h"
+#include "BundleAdjustment/opencvboundleadjustment.h"
 
 namespace LuxSlam
 {
@@ -32,6 +33,7 @@ namespace LuxSlam
         LuxFrame *curr_frame;
         FPoints *prev_features;
         FPoints *curr_features;
+        OpenCVBoundleAdjustemnt* bundle_adjusment;
         Triple global_transformation_vector;
         void Get3dPointsOfMatches(const std::vector<cv::DMatch>& matches,  std::vector<MatchPoints>& points);
     };
