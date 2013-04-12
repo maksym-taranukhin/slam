@@ -90,7 +90,6 @@ namespace LuxSlam
         } else return 1;
     }
 
-    // Select an optimal translation vector from set
     Triple RTFinderTrilateration::getOptimumVector(std::vector< Triple > various_vectors)
     {
         double summ = 0, min_summ = 0;

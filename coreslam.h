@@ -22,8 +22,14 @@ namespace LuxSlam
     class CoreSlam
     {
     public:
+        /// default constructor
         CoreSlam();
-        void run(LuxFrame*);
+
+        /// run slam algorithm
+        /**
+            \param frame - image from kinect
+        */
+        void run(LuxFrame* frame);
     private:
         IFeatureDetector *fdetector;
         IFeatureMatching *fmatcher;
@@ -35,6 +41,12 @@ namespace LuxSlam
         FPoints *curr_features;
         OpenCVBoundleAdjustemnt* bundle_adjusment;
         Triple global_transformation_vector;
+
+        /// get 3d coordinates of matches points
+        /**
+            \param matches - matche points
+            \param points - output vector fill 2d and 3d coordinates for each match point
+        */
         void Get3dPointsOfMatches(const std::vector<cv::DMatch>& matches,  std::vector<MatchPoints>& points);
     };
 }
