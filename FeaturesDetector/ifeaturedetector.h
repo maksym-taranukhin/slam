@@ -18,7 +18,13 @@ namespace LuxSlam
     {
     public:
         IFeatureDetector();
-        virtual FPoints * getFeatures (const LuxFrame *) = 0;// FPoints * must be allocated
+        /// find the feature points for kinect frame
+        /**
+            \param frame - frame from kinect
+            \return detected feature-points
+        */
+
+        virtual FPoints * getFeatures (const LuxFrame * frame) = 0;// FPoints * must be allocated
     };
 }
 #endif // IFEATUREDETECTOR_H

@@ -12,8 +12,14 @@ namespace LuxSlam
     {
         public:
         IMatchesFilter();
+
+        /// filter the set of correspondences from false correspondences
+        /**
+            \param matches - correspondences set
+            \return filtred correspondences set
+        */
         virtual std::vector< MatchPoints >  filterMatches(
-                std::vector <MatchPoints> ) = 0;
+                std::vector <MatchPoints> matches) = 0;
     };
 }
 #endif // IMATCHESFILTER_H
