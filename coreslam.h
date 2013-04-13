@@ -19,6 +19,35 @@
 
 namespace LuxSlam
 {
+    /** Sequence diagram for main function run()
+        \msc
+            hscale="1.5";
+            CoreSlam, IFeatureDetector, IFeatureMatching, IMatchesFilter, IRTFinder, Logger;
+
+            |||;
+
+            CoreSlam->IFeatureDetector [label="getFeatures", URL="\ref IFeatureDetector::getFeatures()", ID="1"];
+            CoreSlam<-IFeatureDetector [label="return features"];
+
+            CoreSlam->IFeatureMatching [label="getMatches", URL="\ref IFeatureMatching::getMatches()", ID="2"];
+            CoreSlam<-IFeatureMatching [label="return matches"];
+
+            CoreSlam->IMatchesFilter [label="filterMatches", URL="\ref IMatchesFilter::filterMatches()", ID="3"];
+            CoreSlam<-IMatchesFilter [label="return filtered matches"];
+
+            CoreSlam->IRTFinder [label="calculate transformation", URL="\ref IRTFinder::getRTVector()", ID="4"];
+            CoreSlam<-IRTFinder [label="return transformation matrix"];
+
+            CoreSlam->Logger [label="get logger reference", URL="\ref Logget::getInstance()", ID="5"];
+            CoreSlam<-Logger [label="return logger reference"];
+
+            CoreSlam->Logger [label="logging some calculated data", URL="\ref Logget::logCamera()", ID="6"];
+            CoreSlam<-Logger [label=""];
+
+
+
+        \endmsc
+     */
     class CoreSlam
     {
     public:

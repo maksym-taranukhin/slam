@@ -37,7 +37,6 @@ namespace LuxSlam
             \return matrix rotation
         */
         cv::Mat findMatrixRotation(const Triple data);
-    public:
 
         /// sort match points by three in spacial structure Triple. Sorting use longest destances between each of three points
         /**
@@ -45,6 +44,9 @@ namespace LuxSlam
             \return sorted points by three int structure Triple
         */
         std::vector< Triple > sortByTriple(std::vector<MatchPoints> points);
+
+    public:
+
 
         RTFinderTrilateration();
     };
