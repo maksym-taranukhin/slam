@@ -7,15 +7,20 @@ namespace LuxSlam
 {
 /**
 \mainpage The mainpage documentation
-<b> Simultaneous localization and mapping (SLAM) is a technique used by robots and autonomous vehicles to build up a map within an unknown environment. The solution is based on the depth map and RGB-image, obtained with the Kinect sensor and includes the following stages:
-calculation of the displacement relative to the previous position of the robot as a vector r = (x, y, z). Here, each component of the vector corresponds to the displacement of each of the axes in the 3-dimensional space.
+<b> Simultaneous localization and mapping (SLAM) is a technique used by robots and autonomous vehicles to build
+up a map within an unknown environment. The solution is based on the depth map and RGB-image, obtained with the
+Kinect sensor and includes the following stages:
+calculation of the displacement relative to the previous position of the robot as a vector r = (x, y, z). Here,
+each component of the vector corresponds to the displacement of each of the axes in the 3-dimensional space.
 finding a rotation matrix.
 In the first stage find feature points on each frame. Then find corresponding points between adjacent frames.
 
-Identified the same points on different RGB-image frames, and knowing the distances to them (from the kinect frame), we can calculate the  displacement of the robot relative to the previous position.
+Identified the same points on different RGB-image frames, and knowing the distances to them (from the kinect frame),
+we can calculate the  displacement of the robot relative to the previous position.
 
 The RTFindTrilateration class make it using the trilateration.
-It find the translation vector, and having three points from the current and previous frame, it find a rotation matrix by solving three systems of linear equations of the form
+It find the translation vector, and having three points from the current and previous frame, it find a rotation
+matrix by solving three systems of linear equations of the form
 </b>
 \image html "system.png"
 */
@@ -28,6 +33,7 @@ It find the translation vector, and having three points from the current and pre
         prev_frame = 0;
         prev_features = 0;
         bundle_adjusment = new OpenCVBoundleAdjustemnt(5);
+        //bundle_adjusment->run();
     }
 
     void CoreSlam::Get3dPointsOfMatches(const std::vector<cv::DMatch>& matches,  std::vector<MatchPoints>& points)
@@ -116,7 +122,14 @@ It find the translation vector, and having three points from the current and pre
             global_transformation_vector.translation_vector =
                     global_transformation_vector.translation_vector + result.translation_vector;
 
-//            bundle_adjusment->pushFrame(points,global_transformation_vector);
+                    std::vector<MatchPoints> match1;
+
+                    Triple tmp = result;
+                    match1.push_back(tmp.first_point);
+                    match1.push_back(tmp.second_point);
+                    match1.push_back(tmp.third_point);
+
+                    //bundle_adjusment->pushFrame(match1,global_transformation_vector);
 
         }
 
