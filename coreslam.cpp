@@ -118,14 +118,14 @@ CoreSlam::CoreSlam()
             global_transformation_vector.translation_vector =
                     global_transformation_vector.translation_vector + result.translation_vector;
 
-                    std::vector<MatchPoints> match1;
+//                    std::vector<MatchPoints> match1;
 
-                    Triple tmp = result;
-                    match1.push_back(tmp.first_point);
-                    match1.push_back(tmp.second_point);
-                    match1.push_back(tmp.third_point);
+//                    Triple tmp = result;
+//                    match1.push_back(tmp.first_point);
+//                    match1.push_back(tmp.second_point);
+//                    match1.push_back(tmp.third_point);
 
-                    //bundle_adjusment->pushFrame(match1,global_transformation_vector);
+//                    bundle_adjusment->pushFrame(match1,global_transformation_vector);
 
         }
 

@@ -51,9 +51,9 @@ namespace LuxSlam
           distCoeffs.push_back((cv::Mat_<double>(4,1) << 0, 0, 0, 0));
         }
 
-        for (unsigned int i = 0; i < numCamera; ++i)
+        for (unsigned int i = 0; i < cameraMatrix.size(); ++i)
             for (unsigned int j = 0; j < queueFrame[i].matches.size(); ++j)
-                points_opt.push_back(cv::Point3d(0,0,0));
+                points_opt.push_back(queueFrame[i].matches[j].second3d);
 
 
         for (int i=0 ; i < cameraMatrix.size(); i++)
@@ -120,24 +120,29 @@ namespace LuxSlam
 
         for (int i= 0;i<cameraMatrix.size();i++)
         {
-            R_opt.push_back(cv::Mat::eye(cv::Size(3,3),CV_32FC1));
-            T_opt.push_back(cv::Mat::eye(cv::Size(3,1),CV_32FC1));
+            R_opt.push_back(queueFrame.at(i).triple.rotation_matrix);
+
+            T_opt.push_back(cv::Mat(queueFrame.at(i).triple.translation_vector));
+
+
         }
         for (int i = 0; i < points_opt.size(); ++i)
             std::cerr <<"("<< points_opt[i].x << ", " << points_opt[i].y << ", "<< points_opt[i].z << ")\n";
 
+        std::cerr <<"tvec"<<T_opt.at(1)<<"\n";
         // run bunble adjustment
         cv::LevMarqSparse   lms;
         lms.bundleAdjust(points_opt, imagePoints, visiblity, cameraMatrix, R_opt, T_opt, distCoeffs, criteria);
+        std::cerr <<"tvec"<<T_opt.at(1)<<"\n";
 
         for (int i = 0; i < points_opt.size(); ++i)
             std::cerr <<"("<< points_opt[i].x << ", " << points_opt[i].y << ", "<< points_opt[i].z << ")\n";
 
-        cv::Mat eulerAngles = StaticFunctions::getEulerAngles(R_opt.at(0));
+        cv::Mat eulerAngles = StaticFunctions::getEulerAngles(R_opt.at(1));
 
         Logger & l = Logger::getInstance ();
 
-        l.logCamera(cv::Point3d(T_opt.at(0)),eulerAngles.at<float>(0)/M_PI*180,eulerAngles.at<float>(1)/M_PI*180,eulerAngles.at<float>(2)/M_PI*180);
+        l.logCamera(cv::Point3d(T_opt.at(1)),eulerAngles.at<float>(0)/M_PI*180,eulerAngles.at<float>(1)/M_PI*180,eulerAngles.at<float>(2)/M_PI*180);
 
     }
 }
