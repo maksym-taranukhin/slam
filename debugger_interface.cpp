@@ -1,6 +1,11 @@
 #include <debugger_interface.hpp>
 
-SlamInterface::SlamInterface (Config::ptr c) : IAbstractAlgorithm (c)
+const std::string SlamInterface::id_string()
+{
+    return "slam algorithm";
+}
+
+SlamInterface::SlamInterface (arstudio::Config::ptr c) : IAbstractAlgorithm (c)
 {
     frames_counter = 0;
     frames_step = atoi(config->get<std::string> ("coreslam.frames_step").c_str());
@@ -12,7 +17,7 @@ bool SlamInterface::create()
 	return true;
 }
 
-bool SlamInterface::run(cv::Mat &image, cv::Mat &dmap)
+bool SlamInterface::run(const cv::Mat &image, const cv::Mat &dmap)
 {
 	LuxFrame * f = new LuxFrame;
 	f->image = image;
