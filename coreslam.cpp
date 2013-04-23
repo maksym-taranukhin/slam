@@ -170,10 +170,10 @@ CoreSlam::CoreSlam()
 
         cv::Mat eulerAngles = StaticFunctions::getEulerAngles(global_transformation_vector.rotation_matrix);
 
-        Logger & l = Logger::getInstance ();
+        arstudio::Logger & l = arstudio::Logger::instance();
 
-        l.logCamera(global_transformation_vector.translation_vector,eulerAngles.at<float>(0)/M_PI*180,eulerAngles.at<float>(1)/M_PI*180,eulerAngles.at<float>(2)/M_PI*180);
-        l.addImage(results,"fatures");
+        l.log_camera(global_transformation_vector.translation_vector,eulerAngles.at<float>(0)/M_PI*180,eulerAngles.at<float>(1)/M_PI*180,eulerAngles.at<float>(2)/M_PI*180);
+        l.log_image(results,"fatures");
 
         delete prev_frame;
         delete prev_features;

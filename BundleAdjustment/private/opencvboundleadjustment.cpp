@@ -140,9 +140,9 @@ namespace LuxSlam
 
         cv::Mat eulerAngles = StaticFunctions::getEulerAngles(R_opt.at(1));
 
-        Logger & l = Logger::getInstance ();
+        arstudio::Logger & l = arstudio::Logger::instance();
 
-        l.logCamera(cv::Point3d(T_opt.at(1)),eulerAngles.at<float>(0)/M_PI*180,eulerAngles.at<float>(1)/M_PI*180,eulerAngles.at<float>(2)/M_PI*180);
+        l.log_camera(cv::Point3d(T_opt.at(1)),eulerAngles.at<float>(0)/M_PI*180,eulerAngles.at<float>(1)/M_PI*180,eulerAngles.at<float>(2)/M_PI*180,"BA-camera");
 
     }
 }
