@@ -126,7 +126,44 @@ CoreSlam::CoreSlam()
 //                    match1.push_back(tmp.third_point);
 
 //                    bundle_adjusment->pushFrame(match1,global_transformation_vector);
+//                    //bundle_adjusment->pushFrame(points,global_transformation_vector);
 
+        }
+        else
+        {
+            // calibrate camera
+            //*************
+            //todo - save this parametr to using in BA
+
+            std::vector <std::vector <cv::Point3f>> object_points;
+            std::vector <std::vector <cv::Point2f>> image__points;
+            std::vector <cv::Point3f>               obj_points_row;
+            std::vector <cv::Point2f>               img_points_row;
+
+            cv::Mat cameraMatrix    =   cv::Mat::eye(3, 3, CV_64F);;
+            cv::Mat distCoeffs      =   cv::Mat::zeros(8, 1, CV_64F);
+
+            std::vector<cv::Mat> rvecs, tvecs;
+
+            cameraMatrix = (cv::Mat_<double>(3,3) <<
+                            500.    ,     0.    ,   300.,
+                            0.      ,     500.  ,   250.,
+                            0.      ,     0.    ,   1.
+                            );
+
+            for (int i=0 ; i<curr_features->points.size(); i++)
+            {
+                cv::Point2d curr_point = curr_features->points.at(i).pt;
+                img_points_row.push_back(curr_point);
+                obj_points_row.push_back(curr_frame->getPoint3D(curr_point.x, curr_point.y));
+            }
+            object_points.push_back(obj_points_row);
+            image__points.push_back(img_points_row);
+
+            cv::calibrateCamera(object_points, image__points, curr_frame->image.size(), cameraMatrix, distCoeffs, rvecs, tvecs, CV_CALIB_USE_INTRINSIC_GUESS);
+
+            std::cerr << "\ncamera metrix\n"    << cameraMatrix <<"\n";
+            std::cerr << "\ndist coeff\n"       << distCoeffs   <<"\n";
         }
 
         // Logging the camera
