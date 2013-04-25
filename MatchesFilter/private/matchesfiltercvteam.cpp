@@ -26,7 +26,7 @@ namespace LuxSlam
         int min_failed=100000;
         int min_index=-1;
 
-        for (int ii = 0; ii<good_matches.size(); ii+=1)
+        for (unsigned int ii = 0; ii<good_matches.size(); ii+=1)
         {
                 int failed=0;
                 cv::Point3d curr_p3d = good_matches.at(ii).first3d;
