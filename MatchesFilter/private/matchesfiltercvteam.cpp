@@ -10,7 +10,7 @@ namespace LuxSlam
     {
         std::vector <MatchPoints> good_matches;
 
-        for( int i = 0; i < input_matches.size(); i++ )
+        for(uint i = 0; i < input_matches.size(); i++ )
         {
               cv::Point3d point3d1 = input_matches.at(i).first3d;
               cv::Point3d point3d2 = input_matches.at(i).second3d;
@@ -26,13 +26,13 @@ namespace LuxSlam
         int min_failed=100000;
         int min_index=-1;
 
-        for (unsigned int ii = 0; ii<good_matches.size(); ii+=1)
+        for (uint ii = 0; ii<good_matches.size(); ii+=1)
         {
                 int failed=0;
                 cv::Point3d curr_p3d = good_matches.at(ii).first3d;
                 cv::Point3d curr_p3d2 = good_matches.at(ii).second3d;
 
-                for( int i = 0; i < good_matches.size(); i++ )
+                for(uint i = 0; i < good_matches.size(); i++ )
                 {
                       cv::Point3d p3d1 = good_matches.at(i).first3d;
                       cv::Point3d p3d2 = good_matches.at(i).second3d;
@@ -57,7 +57,7 @@ namespace LuxSlam
             cv::Point3d curr_p3d = good_matches.at(min_index).first3d;
             cv::Point3d curr_p3d2 = good_matches.at(min_index).second3d;
 
-            for( int i = 0; i < good_matches.size(); i++ )
+            for(uint i = 0; i < good_matches.size(); i++ )
             {
                   cv::Point3d p3d1 = good_matches.at(i).first3d;
                   cv::Point3d p3d2 = good_matches.at(i).second3d;

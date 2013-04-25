@@ -34,7 +34,7 @@ CoreSlam::CoreSlam()
 
     void CoreSlam::Get3dPointsOfMatches(const std::vector<cv::DMatch>& matches,  std::vector<MatchPoints>& points)
     {
-        for (unsigned int i = 0 ; i< matches.size(); i++)
+        for (uint i = 0 ; i< matches.size(); i++)
         {
             cv::KeyPoint p1 = prev_features->points.at(matches.at(i).queryIdx);
             cv::KeyPoint p2 = curr_features->points.at(matches.at(i).trainIdx);
@@ -67,7 +67,7 @@ CoreSlam::CoreSlam()
         // drawing results
         cv::Mat results;
         curr_frame->image.copyTo(results);
-        for (int i=0; i<curr_features->points.size();i++)
+        for (uint i=0; i<curr_features->points.size();i++)
             cv::circle(results,curr_features->points.at(i).pt,5,cvScalar(100),3);
 
         if (prev_frame)  // if this is the first frame
@@ -84,7 +84,7 @@ CoreSlam::CoreSlam()
             points = ffilter->filterMatches(points);
 
             // drawing results
-            for (int i=0;i<points.size();i++)
+            for (uint i=0;i<points.size();i++)
                 cv::line(results,points.at(i).first2d,points.at(i).second2d,cvScalar(0,190),3);
 
             // getting rotation, translation vector
@@ -151,7 +151,7 @@ CoreSlam::CoreSlam()
                             0.      ,     0.    ,   1.
                             );
 
-            for (int i=0 ; i<curr_features->points.size(); i++)
+            for (uint i=0 ; i<curr_features->points.size(); i++)
             {
                 cv::Point2d curr_point = curr_features->points.at(i).pt;
                 img_points_row.push_back(curr_point);
